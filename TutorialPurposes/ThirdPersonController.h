@@ -40,9 +40,15 @@ public:
 	UPROPERTY(EditAnywhere) // we can see it and edit that variable
 		float Power_Threshold;
 
+	UPROPERTY(EditAnywhere, Category = "UI HUD")
+		TSubclassOf<UUserWidget> Player_Power_Widget_Class;
+	UUserWidget* Player_Power_Widget;
+
 	UFUNCTION() // declare pickable
 		void OnBeginOverlap(class UPrimitiveComponent* HitComp,
 			class AActor* OtherActor, class UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	void RestartGame();
 	 
 
 

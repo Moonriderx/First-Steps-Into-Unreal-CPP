@@ -2,6 +2,9 @@
 
 
 #include "ThirdPersonController.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "GameFramework/Actor.h"
+#include "Kismet/GamePlayStatics.h"
 
 // Sets default values
 AThirdPersonController::AThirdPersonController()
@@ -31,6 +34,7 @@ AThirdPersonController::AThirdPersonController()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	bDead = false;
+	Power = 100.0f;
 
 
 
@@ -48,6 +52,13 @@ void AThirdPersonController::BeginPlay()
 	
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AThirdPersonController::OnBeginOverlap); 
+
+	if (Player_Power_Widget_Class != nullptr) { // if its not attached from the third person blueprint details
+
+		Player_Power_Widget = CreateWidget(GetWorld(), Player_Power_Widget_Class);
+		Player_Power_Widget->AddToViewport();
+
+	}
 	
 }
 
@@ -55,6 +66,22 @@ void AThirdPersonController::BeginPlay()
 void AThirdPersonController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	Power -= DeltaTime * Power_Threshold;
+
+
+	if (Power <= 0.0f) {
+		if (!bDead) {
+			bDead = true;
+
+			GetMesh()->SetSimulatePhysics(true);
+
+			FTimerHandle UnusedHandle;
+			// its going to set the timer and execute the function after 3 seconds only once.
+			GetWorldTimerManager().SetTimer(UnusedHandle, this, &AThirdPersonController::RestartGame, 3.0f, false); 
+
+		}
+	}
 
 }
 
@@ -107,9 +134,20 @@ void AThirdPersonController::OnBeginOverlap(UPrimitiveComponent* HitComp, AActor
 {
 
 	if (OtherActor->ActorHasTag("Recharge")) { // if the collided object has tag Recharge
-		UE_LOG(LogTemp, Warning, TEXT("Collided with")); 
+		Power += 10.0f;
+
+		if (Power > 100.0f) {
+			Power = 100.0f;
+		}
+
+		OtherActor->Destroy();
 	}
 
 
+}
+
+void AThirdPersonController::RestartGame()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false); // this is going to open the level inside of this class and get the world and get the name of the world
 }
 
