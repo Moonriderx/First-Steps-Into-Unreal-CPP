@@ -30,8 +30,13 @@ AThirdPersonController::AThirdPersonController()
 
 	FollowCamera->bUsePawnControlRotation = false;
 
+	bDead = false;
+
+
 
 }
+
+
 
 // Called when the game starts or when spawned
 void AThirdPersonController::BeginPlay()
@@ -51,6 +56,43 @@ void AThirdPersonController::Tick(float DeltaTime)
 void AThirdPersonController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	//bind the mouse
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+
+	PlayerInputComponent->BindAxis("MoveForward", this, &AThirdPersonController::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AThirdPersonController::MoveRight);
+	
+
+}
+
+void AThirdPersonController::MoveForward(float Axis)
+{
+
+	if (!bDead) {
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X); // calculate the forward direction of YawRotation vector
+		AddMovementInput(Direction, Axis);
+	}
+
+}
+
+void AThirdPersonController::MoveRight(float Axis)
+{
+	if (!bDead) {
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y); // calculate the forward direction of YawRotation vector
+		AddMovementInput(Direction, Axis);
+	}
 
 }
 
