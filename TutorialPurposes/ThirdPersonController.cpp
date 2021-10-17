@@ -38,10 +38,16 @@ AThirdPersonController::AThirdPersonController()
 
 
 
+
+
 // Called when the game starts or when spawned
 void AThirdPersonController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AThirdPersonController::OnBeginOverlap); 
 	
 }
 
@@ -93,6 +99,17 @@ void AThirdPersonController::MoveRight(float Axis)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y); // calculate the forward direction of YawRotation vector
 		AddMovementInput(Direction, Axis);
 	}
+
+}
+
+void AThirdPersonController::OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComponent, 
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+	if (OtherActor->ActorHasTag("Recharge")) { // if the collided object has tag Recharge
+		UE_LOG(LogTemp, Warning, TEXT("Collided with")); 
+	}
+
 
 }
 

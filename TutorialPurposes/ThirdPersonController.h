@@ -33,6 +33,16 @@ public:
 	void MoveRight(float Axis);
 
 	bool bDead;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) 
+		float Power;
+
+	UPROPERTY(EditAnywhere) // we can see it and edit that variable
+		float Power_Threshold;
+
+	UFUNCTION() // declare pickable
+		void OnBeginOverlap(class UPrimitiveComponent* HitComp,
+			class AActor* OtherActor, class UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	 
 
 
