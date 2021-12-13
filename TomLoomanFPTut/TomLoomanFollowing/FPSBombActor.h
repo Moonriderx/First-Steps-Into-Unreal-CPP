@@ -16,6 +16,13 @@ public:
 	AFPSBombActor();
 
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = "BombActor")
+	float ExplodeDelay;
+
+	UFUNCTION() // to be able to bind this variable with the timer it should be UFUNCTION
+	void Explode();
+
+protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
