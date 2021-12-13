@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "FPSBombActor.generated.h"
 
+
 UCLASS()
 class TOMLOOMANFOLLOWING_API AFPSBombActor : public AActor
 {
@@ -18,6 +19,9 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "BombActor")
 	float ExplodeDelay;
+
+	UPROPERTY(EditDefaultsOnly, Category = "BombActor")
+	UParticleSystem* ExplosionTemplate;
 
 	UFUNCTION() // to be able to bind this variable with the timer it should be UFUNCTION
 	void Explode();

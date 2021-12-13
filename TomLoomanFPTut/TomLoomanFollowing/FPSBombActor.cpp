@@ -2,6 +2,8 @@
 
 
 #include "FPSBombActor.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/Engine.h"
 
 // Sets default values
 AFPSBombActor::AFPSBombActor()
@@ -15,7 +17,9 @@ AFPSBombActor::AFPSBombActor()
 
 void AFPSBombActor::Explode()
 {
+	UGameplayStatics::SpawnEmitterAtLocation(this, ExplosionTemplate, GetActorLocation());
 
+	Destroy();
 }
 
 // Called when the game starts or when spawned

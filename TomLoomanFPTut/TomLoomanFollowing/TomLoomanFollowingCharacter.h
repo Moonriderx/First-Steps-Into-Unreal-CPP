@@ -13,6 +13,7 @@ class UCameraComponent;
 class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
+class AFPSBombActor; // add our new class here since it will not recognize on compilation below
 
 UCLASS(config=Game)
 class ATomLoomanFollowingCharacter : public ACharacter
@@ -75,7 +76,7 @@ public:
 	TSubclassOf<class ATomLoomanFollowingProjectile> ProjectileClass;
 
 	UPROPERTY(EditDefaultsOnly, Category="Bombs") 
-	TSubclassOf<AActor> BombClass; // type actor because we don't have our bomb class yet
+	TSubclassOf<AFPSBombActor> BombClass; 
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)

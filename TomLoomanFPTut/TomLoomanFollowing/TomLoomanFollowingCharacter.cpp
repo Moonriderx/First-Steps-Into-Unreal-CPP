@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include "FPSBombActor.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -191,7 +192,7 @@ void ATomLoomanFollowingCharacter::OnFire()
 void ATomLoomanFollowingCharacter::SpawnBomb()
 {
 
-	AActor* MyBomb = GetWorld()->SpawnActor<AActor>(BombClass, GetActorLocation(), GetActorRotation()); // spawn an actor and assign it to MyBomb variable
+	AFPSBombActor* MyBomb = GetWorld()->SpawnActor<AFPSBombActor>(BombClass, GetActorLocation(), GetActorRotation()); // spawn an actor and assign it to MyBomb variable
 
 }
 
