@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "FPSBombActor.generated.h"
 
+class UStaticMeshComponent;
+class UParticleSystem;
+
 
 UCLASS()
 class TOMLOOMANFOLLOWING_API AFPSBombActor : public AActor
@@ -17,11 +20,21 @@ public:
 	AFPSBombActor();
 
 protected:
+
+	UMaterialInstanceDynamic* MaterialInst;
+
+	FLinearColor CurrentColor;
+
+	FLinearColor TargetColor;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "BombActor")
 	float ExplodeDelay;
 
 	UPROPERTY(EditDefaultsOnly, Category = "BombActor")
 	UParticleSystem* ExplosionTemplate;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* MeshComp;
 
 	UFUNCTION() // to be able to bind this variable with the timer it should be UFUNCTION
 	void Explode();
