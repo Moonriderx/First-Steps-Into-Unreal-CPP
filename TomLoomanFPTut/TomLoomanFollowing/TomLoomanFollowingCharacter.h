@@ -74,6 +74,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class ATomLoomanFollowingProjectile> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly, Category="Bombs") 
+	TSubclassOf<AActor> BombClass; // type actor because we don't have our bomb class yet
+
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;
@@ -90,6 +93,13 @@ protected:
 	
 	/** Fires a projectile. */
 	void OnFire();
+
+	/** Spawning a Bomb*/
+	void SpawnBomb();
+
+
+	
+
 
 	/** Resets HMD orientation and position in VR. */
 	void OnResetVR();

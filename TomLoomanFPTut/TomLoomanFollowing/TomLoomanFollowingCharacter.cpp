@@ -120,6 +120,8 @@ void ATomLoomanFollowingCharacter::SetupPlayerInputComponent(class UInputCompone
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ATomLoomanFollowingCharacter::OnFire);
 
+	PlayerInputComponent->BindAction("SpawnBomb", IE_Pressed, this, &ATomLoomanFollowingCharacter::SpawnBomb);
+
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
 
@@ -184,6 +186,13 @@ void ATomLoomanFollowingCharacter::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+}
+
+void ATomLoomanFollowingCharacter::SpawnBomb()
+{
+
+	AActor* MyBomb = GetWorld()->SpawnActor<AActor>(BombClass, GetActorLocation(), GetActorRotation()); // spawn an actor and assign it to MyBomb variable
+
 }
 
 void ATomLoomanFollowingCharacter::OnResetVR()
