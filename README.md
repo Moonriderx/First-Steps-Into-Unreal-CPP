@@ -6,3 +6,5 @@ Simple project where a third person character collects battery and gains health 
 //TODO: Add more functionalities like score UI, Super batteries, etc
 
 # FPSTomLoomanTutorialFollow
+
+Messing around with the First Person Controller
